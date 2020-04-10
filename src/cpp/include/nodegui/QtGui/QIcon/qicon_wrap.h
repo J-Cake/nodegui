@@ -28,4 +28,5 @@ class DLL_EXPORT QIconWrap : public Napi::ObjectWrap<QIconWrap> {
 
 namespace StaticQIconWrapMethods {
 DLL_EXPORT Napi::Value fromQVariant(const Napi::CallbackInfo& info);
+DLL_EXPORT Napi::Value fromTheme(const Napi::CallbackInfo& info);
 }  // namespace StaticQIconWrapMethods
