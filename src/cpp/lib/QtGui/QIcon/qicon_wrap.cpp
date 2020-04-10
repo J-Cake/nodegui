@@ -16,6 +16,7 @@ Napi::Object QIconWrap::init(Napi::Env env, Napi::Object exports) {
        InstanceMethod("setIsMask", &QIconWrap::setIsMask),
        InstanceMethod("cacheKey", &QIconWrap::cacheKey),
        StaticMethod("fromQVariant", &StaticQIconWrapMethods::fromQVariant),
+       StaticMethod("fromTheme", &StaticQIconWrapMethods::fromTheme),
        COMPONENT_WRAPPED_METHODS_EXPORT_DEFINE(QIconWrap)});
   constructor = Napi::Persistent(func);
   exports.Set(CLASSNAME, func);
@@ -116,4 +117,18 @@ Napi::Value StaticQIconWrapMethods::fromQVariant(
   auto instance = QIconWrap::constructor.New(
       {Napi::External<QIcon>::New(env, new QIcon(icon))});
   return instance;
+}
+
+Napi::Value StaticQIconWrapMethods::fromTheme(
+        const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    std::string iconName = info[0].As<Napi::String>().Utf8Value();
+
+    QIcon icon = QIcon::fromTheme(QString::fromStdString(iconName));
+
+    auto instance = QIconWrap::constructor.New(
+            {Napi::External<QIcon>::New(env, new QIcon(icon))});
+    return instance;
 }

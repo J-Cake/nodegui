@@ -58,6 +58,9 @@ export class QIcon extends Component {
     static fromQVariant(variant: QVariant): QIcon {
         return new QIcon(addon.QIcon.fromQVariant(variant.native));
     }
+    static fromTheme(iconName: string): QIcon {
+        return addon.QIcon.fromTheme(iconName);
+    }
 }
 
 export enum QIconMode {
